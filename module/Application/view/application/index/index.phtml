@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2>Install</h2>
+        <div class="alert-warning">Update a file for actual DB config ./config/autoload/doctrine.local.php.</div>
+        <div class="alert-warning">Add new host (at the example example.com).</div>
+        <div><code>composer install</code></div>
+        <div><code>./vendor/bin/doctrine-module orm:schema-tool:update --force</code></div>
+
+        <h2>Using</h2>
+
+        <h3>Create</h3>
+        <div><code>curl -X POST -H 'Content-Type: application/json' -d '{"name":"name1","fullname":"lalala","email":"email@bigmir.net"}' http://example.com/api/create</code></div>
+
+        <h3>Read</h3>
+        <div><code>curl -X GET http://example.com/api/read/1</code></div>
+        <div>or open link in web-browser <a href="http://example.com/api/read/1" target="_blank">http://example.com/api/read/1</a></div>
+
+        <h3>Update</h3>
+        <div><code>curl -X PUT -H 'Content-Type: application/json' -d '{"name":"vasya123"}' http://example.com/api/update/1</code></div>
+
+        <h3>Delete</h3>
+        <div><code>curl -X DELETE http://example.com/api/delete/1</code></div>
+
+        <h2>Require</h2>
+        <ul>
+            <li>PHP 5.6</li>
+            <li>MySQL 5.*</li>
+            <li>curl</li>
+            <li>Apache 2.4+</li>
+            <li>web-server</li>
+        </ul>
+
+        <h2>Example config host (in OS Linux Ubuntu)</h2>
+        <div>
+            <pre>
+                &lt;VirtualHost *:80>
+                    ServerName example.com
+
+                    ServerAdmin webmaster@localhost
+                    DocumentRoot /var/www/html/public
+
+                    ErrorLog ${APACHE_LOG_DIR}/error.log
+                    CustomLog ${APACHE_LOG_DIR}/access.log combined
+                    &lt;Directory /var/www/html/public>
+                        DirectoryIndex index.php
+                        AllowOverride All
+                        Require all granted
+                    &lt;/Directory>
+                &lt;/VirtualHost>
+            </pre>
+        </div>
+
+    </div>
+    <?php if (!empty($this->users)) : ?>
+        <h1 class="text-center">Rows</h1>
+        <?php foreach ($this->users as $user) : ?>
+            <div class="col-md-6 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="text-center alert-info"><?php echo $user->getName(); ?></div>
+                    <div class="text-center">Full Name: <?php echo $user->getFullname(); ?></div>
+                    <div class="text-center">Email: <a href="mailto:<?php echo $user->getEmail(); ?>"><?php echo $user->getEmail(); ?></a></div>
+                    <div class="text-center">Telephone: <a href="call:<?php echo $user->getTelephone(); ?>"><?php echo $user->getTelephone(); ?></a></div>
+                    <div class="text-center">Address: <?php echo $user->getAddress(); ?></div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</div>
